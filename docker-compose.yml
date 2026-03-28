@@ -1,0 +1,44 @@
+services:
+  postgres: 
+    container_name: postgres-sql-ca
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: salman
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: chatappdb
+
+    volumes:
+      - postgres:/data/postgres
+
+    ports:
+      - 5432:5432
+
+    networks:
+     - chatapp
+
+    restart: unless-stopped
+
+  keycloak:
+    container_name: keycloak-ca
+    image: quay.io/keycloak/keycloak:26.5.0
+    ports:
+      - 9090:8080
+
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    
+    networks:
+      - chatapp
+
+    command: 
+      - "start-dev"
+
+volumes:
+  postgres: 
+    driver: local
+
+networks:
+  chatapp:
+    driver: bridge
