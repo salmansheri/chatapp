@@ -26,6 +26,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -39,6 +40,7 @@ import lombok.Setter;
 @NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVERID, 
     query = "SELECT DISTINCT c FROM Chat c WHERE (c.sender.userId = :senderId AND c.recipient.userId = :recipientId) OR (c.sender.userId = :recipientId AND c.recipient.userId = :senderId)"
 )
+@SuperBuilder
 public class Chat extends BaseAuditingEntity{
 
     @Id
