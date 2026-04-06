@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -33,6 +34,7 @@ import lombok.Setter;
 @NamedQuery(name = UserConstants.FIND_USER_BY_PUBLIC_ID, 
     query = "SELECT u FROM User u WHERE u.id = :publicId"
 )
+@SuperBuilder
 public class User extends BaseAuditingEntity {
     private static final int LAST_ACTIVE_INTERVAL = 5; 
     @Id

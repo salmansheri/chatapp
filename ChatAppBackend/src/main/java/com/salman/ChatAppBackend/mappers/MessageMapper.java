@@ -1,21 +1,23 @@
 package com.salman.ChatAppBackend.mappers;
 
-import java.util.List;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import com.salman.ChatAppBackend.DTOs.MessageDTO;
+import com.salman.ChatAppBackend.lib.utils.FileUtils;
 import com.salman.ChatAppBackend.models.Message;
 
-@Mapper(componentModel = "spring")
-public interface MessageMapper {
 
-    @Mapping(target = "media", ignore = true)
-    MessageDTO toDto(Message message); 
+public class MessageMapper {
 
-    List<MessageDTO> toDtoList(List<Message> messages); 
-
-    Message toEntity(MessageDTO messageDTO); 
+  public static MessageDTO toMessageResponse(Message message) {
+    return MessageDTO.builder()
+            .messageId(message.getMessageId())
+            .content(message.getContent())
+            .senderId(message.getSenderId())
+            .receiverId(message.getReceiverId())
+            .messageType(message.getMessageType())
+            .messageState(message.getMessageState())
+            .createdAt(message.getCreatedDate())
+            .media(FileUtils.readFileFromLocation(message.getMediaFilePath()))
+            .build(); 
+  }
     
 }

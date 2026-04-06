@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.salman.ChatAppBackend.DTOs.ApiResponseDTO;
 
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler()
+    @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiResponseDTO> customApiException(ApiException ex) {
         String message = ex.getMessage(); 
 

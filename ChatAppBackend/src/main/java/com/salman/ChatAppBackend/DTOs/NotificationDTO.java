@@ -1,10 +1,7 @@
 package com.salman.ChatAppBackend.DTOs;
 
-import java.time.LocalDateTime;
-
-import com.salman.ChatAppBackend.enums.MessageState;
 import com.salman.ChatAppBackend.enums.MessageType;
-import com.salman.ChatAppBackend.models.Chat;
+import com.salman.ChatAppBackend.enums.NotificationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,21 +9,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class MessageDTO extends BaseAuditingDTO {
-    private Long messageId; 
+public class NotificationDTO {
+    private String chatId; 
     private String content; 
-    private MessageState messageState; 
-    private MessageType messageType; 
-    private Chat chat; 
     private String senderId; 
     private String receiverId; 
+    private String chatName; 
+    private MessageType messageType; 
+    private NotificationType notificationType; 
     private byte[] media; 
-    private LocalDateTime createdAt; 
 
     
 }

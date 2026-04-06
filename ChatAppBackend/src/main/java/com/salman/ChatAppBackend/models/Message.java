@@ -19,6 +19,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
@@ -33,6 +34,7 @@ import lombok.*;
 @NamedQuery(name = MessageConstants.SET_MESSAGES_TO_SEEN_BY_CHAT, 
     query = "UPDATE  Message SET messageState = :newMessageState WHERE chat.chatId = :chatId"
 )
+@SuperBuilder
 public class Message extends BaseAuditingEntity {
 
     @Id
@@ -62,6 +64,9 @@ public class Message extends BaseAuditingEntity {
 
     @Column(name = "receiver_id", nullable = false)
     private String receiverId; 
+
+    @Column(name = "media_file_path")
+    private String mediaFilePath; 
 
     
 }
