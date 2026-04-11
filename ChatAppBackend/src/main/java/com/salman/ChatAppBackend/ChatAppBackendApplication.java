@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@SecurityScheme(name = "keycload", type = SecuritySchemeType.OAUTH2, bearerFormat = "JWT", scheme = "bearer", in = SecuritySchemeIn.HEADER, flows = @OAuthFlows(password = @OAuthFlow(authorizationUrl = "http://localhost:9090/realms/chatapp/protocol/openid-connect/auth", tokenUrl = "http://localhost:9090/realms/chatapp/protocol/openid-connect/token")))
+@SecurityScheme(name = "keycloak", type = SecuritySchemeType.OAUTH2, bearerFormat = "JWT", scheme = "bearer", in = SecuritySchemeIn.HEADER, flows = @OAuthFlows(password = @OAuthFlow(authorizationUrl = "http://localhost:9090/realms/chatapp/protocol/openid-connect/auth", tokenUrl = "http://localhost:9090/realms/chatapp/protocol/openid-connect/token")))
 public class ChatAppBackendApplication {
 
 	public static void main(String[] args) {

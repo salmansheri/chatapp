@@ -1,0 +1,541 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/messages": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "operationId": "saveMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Messages"
+        ],
+        "operationId": "setMessageToSeen",
+        "parameters": [
+          {
+            "name": "chat-id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/messages/update-media": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "operationId": "uploadMedia",
+        "parameters": [
+          {
+            "name": "chat-id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/chats": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "operationId": "getChats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "operationId": "createChat",
+        "parameters": [
+          {
+            "name": "sender-id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "receiver-id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateChatResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/messages/chat/{chatId}": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "operationId": "getMessages",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MessageRequestDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          },
+          "senderId": {
+            "type": "string"
+          },
+          "receiverId": {
+            "type": "string"
+          },
+          "messageType": {
+            "type": "string",
+            "enum": [
+              "TEXT",
+              "IMAGE",
+              "AUDIO",
+              "VIDEO"
+            ]
+          },
+          "chatId": {
+            "type": "string"
+          }
+        }
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "chatId": {
+            "type": "string"
+          },
+          "sender": {
+            "$ref": "#/components/schemas/User"
+          },
+          "recipient": {
+            "$ref": "#/components/schemas/User"
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "content": {
+            "type": "string"
+          },
+          "messageState": {
+            "type": "string",
+            "enum": [
+              "SENT",
+              "SEEN"
+            ]
+          },
+          "messageType": {
+            "type": "string",
+            "enum": [
+              "TEXT",
+              "IMAGE",
+              "AUDIO",
+              "VIDEO"
+            ]
+          },
+          "chat": {
+            "$ref": "#/components/schemas/Chat"
+          },
+          "senderId": {
+            "type": "string"
+          },
+          "receiverId": {
+            "type": "string"
+          },
+          "mediaFilePath": {
+            "type": "string"
+          }
+        }
+      },
+      "MessageDTO": {
+        "type": "object",
+        "properties": {
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "messageId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "content": {
+            "type": "string"
+          },
+          "messageState": {
+            "type": "string",
+            "enum": [
+              "SENT",
+              "SEEN"
+            ]
+          },
+          "messageType": {
+            "type": "string",
+            "enum": [
+              "TEXT",
+              "IMAGE",
+              "AUDIO",
+              "VIDEO"
+            ]
+          },
+          "chat": {
+            "$ref": "#/components/schemas/Chat"
+          },
+          "senderId": {
+            "type": "string"
+          },
+          "receiverId": {
+            "type": "string"
+          },
+          "media": {
+            "type": "string",
+            "format": "byte"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "lastSeen": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "chatsAsSender": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Chat"
+            }
+          },
+          "chatsAsRecipient": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Chat"
+            }
+          }
+        }
+      },
+      "ApiResponseDTO": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateChatResponseDTO": {
+        "type": "object",
+        "properties": {
+          "chatId": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "lastSeen": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "online": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChatResponseDTO": {
+        "type": "object",
+        "properties": {
+          "chatId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unreadCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "lastMessage": {
+            "type": "string"
+          },
+          "lastMessageTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isRecipientOnline": {
+            "type": "boolean"
+          },
+          "senderId": {
+            "type": "string"
+          },
+          "receiverId": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "keycloak": {
+        "type": "oauth2",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "flows": {
+          "password": {
+            "authorizationUrl": "http://localhost:9090/realms/chatapp/protocol/openid-connect/auth",
+            "tokenUrl": "http://localhost:9090/realms/chatapp/protocol/openid-connect/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  }
+}
