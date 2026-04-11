@@ -8,6 +8,7 @@ import com.salman.ChatAppBackend.DTOs.ChatResponseDTO;
 import com.salman.ChatAppBackend.DTOs.CreateChatResponseDTO;
 import com.salman.ChatAppBackend.interfaces.ChatService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor
+@Tag(name = "Chats")
 public class ChatController {
 
     private final ChatService chatService; 

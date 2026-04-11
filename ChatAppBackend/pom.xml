@@ -106,13 +106,19 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
-		<!-- Source: https://mvnrepository.com/artifact/org.springframework.security/spring-security-messaging -->
-<dependency>
-    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-messaging</artifactId>
-    <version>7.0.4</version>
-    <scope>compile</scope>
-</dependency>
+		<!-- Source:
+		https://mvnrepository.com/artifact/org.springframework.security/spring-security-messaging -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
+			<version>7.0.4</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>3.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

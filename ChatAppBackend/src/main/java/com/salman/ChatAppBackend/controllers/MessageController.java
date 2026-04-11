@@ -20,11 +20,15 @@ import com.salman.ChatAppBackend.DTOs.MessageDTO;
 import com.salman.ChatAppBackend.DTOs.MessageRequestDTO;
 import com.salman.ChatAppBackend.interfaces.MessageService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/messages")
 @RequiredArgsConstructor
+@Tag(name = "Messages")
 public class MessageController {
     private final MessageService messageService;
 
@@ -42,7 +46,8 @@ public class MessageController {
     // }\
 
     @PostMapping(value = "/update-media", consumes = "multipart/form-data")
-    public ResponseEntity<ApiResponseDTO> saveMessage(@RequestParam("chat-id") String chatId,
+    public ResponseEntity<ApiResponseDTO> uploadMedia(@RequestParam("chat-id") String chatId,
+        @Parameter()
             @RequestParam("file") MultipartFile file, Authentication authentication) {
 
         ApiResponseDTO apiResponseDTO = messageService.uploadMediaMessage(chatId, file, authentication);

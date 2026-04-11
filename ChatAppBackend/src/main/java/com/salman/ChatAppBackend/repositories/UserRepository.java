@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, String>{
     // @Query(name = UserConstants.FIND_USER_BY_EMAIL)
     Optional<User> findByEmail(String userEmail);
 
-    @Query(UserConstants.FIND_ALL_USERS_EXCEPT_SELF)
+    @Query(name = UserConstants.FIND_ALL_USERS_EXCEPT_SELF)
     List<User> findAllUsersExceptSelf(@Param("publicId") String name);
     
 }

@@ -29,10 +29,10 @@ import lombok.experimental.SuperBuilder;
 //     query = "SELECT u FROM User u WHERE u.email = :email"
 // )
 @NamedQuery(name = UserConstants.FIND_ALL_USERS_EXCEPT_SELF, 
-    query = "SELECT u FROM User u WHERE u.id != :publicId"
+    query = "SELECT u FROM User u WHERE u.userId != :publicId"
 )
 @NamedQuery(name = UserConstants.FIND_USER_BY_PUBLIC_ID, 
-    query = "SELECT u FROM User u WHERE u.id = :publicId"
+    query = "SELECT u FROM User u WHERE u.userId = :publicId"
 )
 @SuperBuilder
 public class User extends BaseAuditingEntity {
